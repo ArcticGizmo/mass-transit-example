@@ -15,12 +15,8 @@ IHost host = Host.CreateDefaultBuilder(args)
                 x.SetKebabCaseEndpointNameFormatter();
 
                 var entryAssembly = Assembly.GetEntryAssembly();
-                // x.AddConsumer<Consumer>();
-
                 x.AddConsumers(entryAssembly);
-                x.AddSagaStateMachines(entryAssembly);
-                x.AddSagas(entryAssembly);
-                x.AddActivities(entryAssembly);
+                // x.AddConsumer<MyConsumer>(); // -- the same in this project
 
                 x.UsingRabbitMq(
                     (ctx, cfg) =>
