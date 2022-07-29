@@ -8,6 +8,7 @@ namespace MTPublisher.Workers;
 public class Worker : BackgroundService
 {
     private readonly IBus _bus;
+    private int _id = 0;
 
     public Worker(IBus bus)
     {
@@ -19,11 +20,11 @@ public class Worker : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             var now = DateTime.Now;
-            var msg = new Message() { Name = $"Hello ${now.ToString()}" };
+            var msg = new Message() { Name = $"Hello ${_id++}" };
             await _bus.Publish(msg);
             Log.Information($"[Published] {msg.Name}");
 
-            await Task.Delay(10_000, stoppingToken);
+            await Task.Delay(500, stoppingToken);
         }
     }
 }
